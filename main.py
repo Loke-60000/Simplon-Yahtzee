@@ -1,7 +1,18 @@
 import random
 from collections import Counter
+from src.graphics import game_title
+from src.graphics import dice_faces
 
-def dices():
+game_title()
+
+def print_dice(dice_values):
+
+    dice_art = [dice_faces[value] for value in dice_values]
+
+    for i in range(len(dice_art[0])):
+        print(" ".join(dice_line[i] for dice_line in dice_art))
+
+def game():
     num_players = int(input("Enter the number of players: "))
     players = list(range(1, num_players + 1))
     current_player = 1
@@ -17,8 +28,7 @@ def dices():
 
         for _ in range(3):
             print("Current dice values:")
-            for i, value in enumerate(dice_values, 1):
-                print(f"Dice {i}: {value}")
+            print_dice(dice_values) 
 
             retry_input = input("Enter 'retry' followed by the dice numbers to reroll (e.g., 'retry 1,3,5'), or any other key to change players: ")
             if retry_input.startswith('retry'):
@@ -52,4 +62,4 @@ def dices():
         print(f"Player {player}: {score}")
     print(f"Player {winning_player} wins with {max_points} points!")
 
-dices()
+game()
