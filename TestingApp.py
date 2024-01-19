@@ -6,13 +6,15 @@ import random
 # Unit Tests
 def test_calculate_mission_score():
     assert calculate_mission_score([1, 2, 3, 4, 5], 7) == 40
+    assert calculate_mission_score([1, 2, 3, 4, 5], 3) == 0
     assert calculate_mission_score([2, 3, 4, 5, 6], 7) == 40
     assert calculate_mission_score([3, 5, 1, 4, 6], 7) == 30
     assert calculate_mission_score([1, 1, 1, 1, 1], 7) == 50
     assert calculate_mission_score([2, 2, 2, 3, 3], 7) == 25
     assert calculate_mission_score([2, 2, 2, 2, 5], 8) == 8
-    assert calculate_mission_score([1, 2, 3, 4], 7) == 30
+    assert calculate_mission_score([1, 2, 3, 4, 6], 7) == 30
     assert calculate_mission_score([2, 2, 2, 3, 3], 4) == 6
+    assert calculate_mission_score([2, 2, 2, 3, 4], 3) == 6
     print('First_test: OK!')
 test_calculate_mission_score()
 
