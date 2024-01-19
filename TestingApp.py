@@ -1,38 +1,47 @@
-from main import roll_dice, calculate_points, reroll_dice, get_reroll_indices
+from main import *
+from src.lucie_function import *
+import unittest
+import random
 
-def test_roll_dice():
-    dice_values = roll_dice(5)
-    assert len(dice_values) == 5, "roll_dice should return 5 dice values"
-    for value in dice_values:
-        assert 1 <= value <= 6, f"Dice value {value} should be between 1 and 6"
-
-def test_calculate_points():
-    assert calculate_points([3, 3, 3, 4, 5]) == 9, "calculate_points should return 9 for [3, 3, 3, 4, 5]"
-    unique_dice_test = calculate_points([1, 2, 3, 4, 5])
-    assert unique_dice_test in [1, 2, 3, 4, 5], "calculate_points should return a value from the dice [1, 2, 3, 4, 5]"
+# Unit Tests
+def test_calculate_mission_score():
+    assert calculate_mission_score([1, 2, 3, 4, 5], 7) == 40
+    assert calculate_mission_score([2, 3, 4, 5, 6], 7) == 40
+    assert calculate_mission_score([3, 5, 1, 4, 6], 7) == 30
+    assert calculate_mission_score([1, 1, 1, 1, 1], 7) == 50
+    assert calculate_mission_score([2, 2, 2, 3, 3], 7) == 25
+    assert calculate_mission_score([2, 2, 2, 2, 5], 8) == 8
+    assert calculate_mission_score([1, 2, 3, 4], 7) == 30
+    assert calculate_mission_score([2, 2, 2, 3, 3], 4) == 6
+    print('First_test: OK!')
+test_calculate_mission_score()
 
 def test_reroll_dice():
-    # Initial roll
-    dice_values = roll_dice(5)
-    # Copy the original dice values
-    original_values = list(dice_values)
-    # Choose a die to reroll (for simplicity, always reroll the first die)
-    reroll_indices = [0]
+    
+    # Cas de test 1 : Relancer un dé unique
+    dice_values = [1, 2, 3, 4, 5]
+    reroll_indices = [2]
     reroll_dice(dice_values, reroll_indices)
-    # Check if the rerolled die has a different value
-    assert dice_values[0] != original_values[0], "The rerolled die should have a different value"
+    assert 1 <= dice_values[2] <= 6
 
-def test_get_reroll_indices():
-    assert get_reroll_indices("retry 1, 3, 5") == [0, 2, 4], "get_reroll_indices should return [0, 2, 4] for 'retry 1, 3, 5'"
-    assert get_reroll_indices("retry 1,3,5") == [0, 2, 4], "get_reroll_indices should return [0, 2, 4] for 'retry 1,3,5'"
-    assert get_reroll_indices("retry") == [], "get_reroll_indices should return an empty list for 'retry'"
+    # Cas de test 2 : Relancer plusieurs dés
+    original_dice_values = [1, 2, 3, 4, 5]
+    reroll_indices = [0, 2, 4]
+    reroll_dice(original_dice_values, reroll_indices)
+    for i in reroll_indices:
+        assert 1 <= original_dice_values[i] <= 6
+    # Cas de test 3 : Aucun dé à relancer
+    original_dice_values = [1, 2, 3, 4, 5]
+    reroll_indices = []
+    reroll_dice(original_dice_values, reroll_indices)
+    assert original_dice_values == [1, 2, 3, 4, 5]
 
-def run_tests():
-    test_roll_dice()
-    test_calculate_points()
-    test_reroll_dice()
-    test_get_reroll_indices()
-    print("All tests passed!")
-
-if __name__ == "__main__":
-    run_tests()
+    # Cas de test 4 : Tous les dés à relancer
+    original_dice_values = [1, 2, 3, 4, 5]
+    reroll_indices = [0, 1, 2, 3, 4]
+    reroll_dice(original_dice_values, reroll_indices)
+    for i in reroll_indices:
+        assert 1 <= original_dice_values[i] <= 6
+    print('Second_Test: OK!')
+# Exécutez les tests
+test_reroll_dice()
