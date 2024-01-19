@@ -2,7 +2,7 @@ from main import *
 from collections import Counter
 from itertools import combinations
 
-def calculate_mission_major(dice_values, round_number):
+def calculate_mission_score(dice_values, round_number):
     frequency = Counter(dice_values)
     most_common_num, count = frequency.most_common(1)[0]
     """Calculate points based on the most common dice value and Yahtzee missions."""
@@ -12,13 +12,13 @@ def calculate_mission_major(dice_values, round_number):
             return 50
         elif count == 4:
             # Carré (4 same dices)
-            return sum(dice_values)
+            return most_common_num * count
         elif count == 3 and len(frequency) == 2:
             # Full (3 same dices and 2 other same dices)
             return 25
         elif count == 3:
             # Three of a kind
-            return sum(dice_values)
+            return most_common_num * count
         elif is_sequence(dice_values, 5):
             # Large straight (any sequence of 5 numbers)
             return 40
