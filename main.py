@@ -1,6 +1,7 @@
 import random
 from collections import Counter
 from src.graphics import game_title, dice_faces
+import src.lucie_function as lf
 
 def print_dice(dice_values):
     """Print the visual representation of dice."""
@@ -41,7 +42,6 @@ def game():
     for round in range(1, 14):
         print(f"Round {round}")
         print(f"Player {current_player}'s turn:")
-        
         dice_values = roll_dice(5)  # Roll 5 dice
 
         for _ in range(3):  # Allow up to 3 rerolls
@@ -54,7 +54,9 @@ def game():
             else:
                 break
 
+        lf.calculate_mission_score(dice_values, round)
         points = calculate_points(dice_values)
+        
         print(f"Points for Player {current_player}: {points}")
 
         scores[current_player] += points
